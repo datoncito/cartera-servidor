@@ -1,5 +1,6 @@
 package cartera;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -15,6 +16,15 @@ public class Cliente {
     private Float sueldo;
     private String email;
     private Direccion direccion;
+    private DateTime fecha;
+
+    public DateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(DateTime fecha) {
+        this.fecha = fecha;
+    }
 
     @Override
     public String toString() {
@@ -25,6 +35,7 @@ public class Cliente {
                 ", sueldo=" + sueldo +
                 ", email='" + email + '\'' +
                 ", direccion=" + direccion +
+                ", fecha=" + fecha +
                 '}';
     }
 

@@ -66,5 +66,6 @@
     <orderEntry type="library" exported="" name="Gradle: org.springframework.data:spring-data-mongodb:1.6.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework.data:spring-data-commons:1.9.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: joda-time:joda-time:2.7" level="project" />
   </component>
 </module>
