@@ -26,4 +26,9 @@ public class ServicioCliente {
 
         return clientes;
     }
+
+    public Cliente buscarPorId(String id){
+     Cliente cli=   mongoTemplate.findById(id, Cliente.class);
+        return cli;
+    }
 }

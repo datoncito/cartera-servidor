@@ -16,6 +16,8 @@ public class Cliente {
     private Float sueldo;
     private String email;
     private Direccion direccion;
+
+
     private DateTime fecha;
 
     public DateTime getFecha() {

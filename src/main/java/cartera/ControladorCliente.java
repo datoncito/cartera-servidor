@@ -2,11 +2,15 @@ package cartera;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.joda.time.DateTime;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,19 +26,31 @@ public class ControladorCliente {
 
     //GET ALL
     @RequestMapping(value="/cliente", method=RequestMethod.GET, headers={"Accept=application/json;charset=UTF-8"})
-     @ResponseBody String buscarTodos()throws Exception{
+     @ResponseBody String buscarTodos(Device device)throws Exception{
       ObjectMapper maper=new ObjectMapper();
+        maper.registerModule(new JodaModule());
+        /*
+if(device.isNormal()){
+    System.out.println("ERES TOPOYIYO!!");
+}else {
+    maper.registerModule(new JodaModule());
+    System.out.println("Ere3s celular");
+}
+*/
+
+ArrayList<Cliente> clientes= (ArrayList<Cliente>) servicioCliente.buscarTodos();
+        Map<String,ArrayList<Cliente>> singletonMap = Collections.singletonMap("clientes", clientes);
              System.out.println(servicioCliente.buscarTodos().get(0).getFecha().toString());
-        return maper.writeValueAsString(servicioCliente.buscarTodos());
+        return maper.writeValueAsString(clientes);
     }
 
     //GET POR ID
     @RequestMapping(value="/cliente/{id}", method=RequestMethod.GET, headers={"Accept=application/json;charset=UTF-8"})
     @ResponseBody String buscarporId(@PathVariable String id)throws Exception{
         ObjectMapper maper=new ObjectMapper();
+        maper.registerModule(new JodaModule());
         Cliente cli=new Cliente();
-        cli.setSueldo(4000f);
-        cli.setNombre("Juan Carlos");
+       cli=servicioCliente.buscarPorId(id);
         System.out.println("<<<<<<<<<<<SE ACTIVO EL GET POR ID  ");
         return maper.writeValueAsString(cli);
     }
@@ -44,6 +60,8 @@ public class ControladorCliente {
     @ResponseBody
     String guardarCliente(@RequestBody String json)throws Exception{
 ObjectMapper mapper=new ObjectMapper();
+
+        mapper.registerModule(new JodaModule());
 
         //convertimos jsonsito a un Cliente, que asi se supone vienen :)
         Cliente cli = mapper.readValue(json,Cliente.class );
@@ -59,7 +77,7 @@ ObjectMapper mapper=new ObjectMapper();
         Cliente cliente=new Cliente();
         cliente.setDireccion(direccion);
         cliente.setEdad(42);
-        cliente.setFecha(DateTime.now());
+        cliente.setFecha(new DateTime());
         cliente.setEmail("rapidclimate@gmail.com");
         cliente.setSueldo(70000f);
        // servicioCliente.guardarCliente(cliente);
